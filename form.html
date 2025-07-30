@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Your Slot</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="form-body">
+  <div class="form-box">
+    <h2>Book Your Slot</h2>
+    <form 
+      action="https://formspree.io/f/mwpqbeqa" 
+      method="POST" 
+      onsubmit="return handleForm(event)"
+      id="bookingForm"
+    >
+      <input type="text" name="Name" placeholder="Your Name" required />
+      <input type="text" name="Course" placeholder="Enter Course" required />
+      <input type="number" name="Class Count" placeholder="Enter Your Class Count" required />
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <p>Your slot is booked successfully</p>
+    <p>DATE : 01/08/2025 AT 11 AM</p>
+    <p>Venue: CORIDOOR ,7TH FLOOR CIMR BUILDING</p> <!-- Change venue name here -->
+    <button onclick="closePopup()">OK</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

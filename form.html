@@ -5,20 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Book Your Slot</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .popup {
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+      color: #fff;
+      text-align: center;
+      z-index: 1000;
+    }
+    .popup.active {
+      display: block;
+    }
+  </style>
 </head>
 <body class="form-body">
+
   <div class="form-box">
     <h2>Book Your Slot</h2>
-    <form 
-      action="https://formspree.io/f/mwpqbeqa" 
-      method="POST" 
-      onsubmit="return handleForm(event)"
-      id="bookingForm"
-    >
+    <form id="bookingForm" onsubmit="handleForm(event)">
       <input type="text" name="Name" placeholder="Your Name" required />
-      <input type="text" name="Course" placeholder="Enter Course" required />
+
+      <select class="box" name="Course" required>
+        <option value="" disabled selected>Select Course</option>
+        <option>BSc IT</option>
+        <option>BAF</option>
+        <option>BMS</option>
+        <option>BMM</option>
+        <option>BBA</option>
+      </select>
+
       <input type="number" name="Class Count" placeholder="Enter Your Class Count" required />
-      <textarea name="message" placeholder="Your Message" required></textarea>
+      
+      <textarea name="message" placeholder="Are You Excited" required></textarea>
+
       <button type="submit">Submit</button>
     </form>
   </div>
@@ -27,10 +52,42 @@
   <div class="popup" id="popup">
     <p>Your slot is booked successfully</p>
     <p>DATE : 01/08/2025 AT 11 AM</p>
-    <p>Venue: CORIDOOR ,7TH FLOOR CIMR BUILDING</p> <!-- Change venue name here -->
+    <p>Venue: CORRIDOR, 7TH FLOOR CIMR BUILDING</p>
     <button onclick="closePopup()">OK</button>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    function handleForm(event) {
+      event.preventDefault(); // Stop default submission
+
+      const form = document.getElementById("bookingForm");
+      const formData = new FormData(form);
+
+      fetch("https://formspree.io/f/mwpqbeqa", {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          document.getElementById("popup").classList.add("active");
+          form.reset();
+        } else {
+          alert("Submission failed. Please try again.");
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        alert("An error occurred while submitting the form.");
+      });
+    }
+
+    function closePopup() {
+      document.getElementById("popup").classList.remove("active");
+    }
+  </script>
+
 </body>
 </html>

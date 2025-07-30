@@ -32,15 +32,20 @@ function validateLogin(event) {
   }
 }
 
+// ---------------------------
 // LOGOUT FUNCTION
+// ---------------------------
 function logout() {
   sessionStorage.removeItem("loggedIn");
   window.location.href = "login.html";
 }
 
-// REDIRECT IF NOT LOGGED IN
+// ---------------------------
+// PROTECT HOME PAGE
+// ---------------------------
 window.addEventListener("DOMContentLoaded", () => {
-  if (window.location.pathname.includes("index.html")) {
+  const currentPage = window.location.pathname.split("/").pop();
+  if (currentPage === "" || currentPage === "index.html") {
     const isLoggedIn = sessionStorage.getItem("loggedIn");
     if (!isLoggedIn) {
       window.location.href = "login.html";
@@ -49,27 +54,29 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 // ---------------------------
-// FORM BOOKING SUBMISSION
+// BOOKING FORM SUBMISSION
 // ---------------------------
 function handleForm(event) {
-  event.preventDefault(); // Prevent actual form submission
+  event.preventDefault(); // Prevent real form submission
 
-  // Show the popup
+  // Show confirmation popup
   const popup = document.getElementById("popup");
   popup.style.display = "block";
 
   // Set current date & time
   const now = new Date();
-  const datetimeString = now.toLocaleString(); // Format: "27/07/2025, 7:23:55 PM"
+  const datetimeString = now.toLocaleString();
   document.getElementById("datetime").textContent = `Date & Time: ${datetimeString}`;
 
-  // Optionally: reset form
+  // Reset the form
   document.getElementById("bookingForm").reset();
 
-  return false; // Prevent real form submit
+  return false;
 }
 
+// ---------------------------
 // CLOSE POPUP FUNCTION
+// ---------------------------
 function closePopup() {
   const popup = document.getElementById("popup");
   popup.style.display = "none";
